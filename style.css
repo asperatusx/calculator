@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+}
+
+#header ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+#header li {
+  list-style: none;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-container {
+  display: flex;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.button {
+  font-size: 40px;
+  padding: 20px;
+}
+
+.button.equal {
+  grid-column: span 2;
+}
+
+.operator-container {
+  display: grid;
+  grid-column-start: -2;
+  grid-row-start: 1;
+}
+
+
+.display {
+  height: 100px;
+}
