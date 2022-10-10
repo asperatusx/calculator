@@ -47,7 +47,12 @@ clearBtn.addEventListener('click', clearDisplay);
 
 
 function fillDisplay() {
-  display.textContent += this.textContent;
+  const numArray = display.textContent.split('');
+  console.log(numArray[0]);
+  if (numArray[0] === '0') {
+    display.textContent = this.textContent;
+  }
+  else display.textContent += this.textContent;
 }
 
 function clearDisplay() {
