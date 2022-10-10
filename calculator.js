@@ -29,7 +29,27 @@ function operate(operator, a, b) {
       return divide(a,b);
       break;
   }
-
-  
 }
 
+const buttons = document.querySelectorAll('.button');
+const clearBtn = document.querySelector('#reset');
+const display = document.querySelector('#display');
+
+// set defualt display to 0
+display.textContent = "0";
+
+//set event on click of all buttons except equal to change display
+const newArray = Array.from(buttons).filter(button => button.id !== "equal");
+newArray.forEach(button => button.addEventListener('click', fillDisplay));
+
+//clear the display screen back to 0
+clearBtn.addEventListener('click', clearDisplay);
+
+
+function fillDisplay() {
+  display.textContent += this.textContent;
+}
+
+function clearDisplay() {
+  display.textContent = '0';
+}

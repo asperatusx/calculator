@@ -34,7 +34,7 @@ body {
   padding: 20px;
 }
 
-.button.equal {
+#equal {
   grid-column: span 2;
 }
 
