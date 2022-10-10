@@ -45,6 +45,14 @@ body {
 }
 
 
-.display {
+#display {
+  display: flex;
+  height: 100px;
+  font-size: 20px;
+  align-items: center;
+
+}
+
+#reset {
   height: 100px;
 }
