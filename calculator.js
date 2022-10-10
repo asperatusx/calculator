@@ -1,4 +1,5 @@
 function add(a,b) {
+  if (b == '') 
   return a + b;
 }
 
@@ -31,30 +32,55 @@ function operate(operator, a, b) {
   }
 }
 
-const buttons = document.querySelectorAll('.button');
-const clearBtn = document.querySelector('#reset');
-const display = document.querySelector('#display');
+const digits = document.querySelectorAll('.button.digit');
+const clearBtn = document.getElementById('reset');
+const operation = document.getElementById('operation');
+const display = document.getElementById('display');
+const operatorBtn = document.querySelectorAll('button.operator');
+
+let sign = false;
+
+operatorBtn.forEach(operator => operator.addEventListener('click', getOperator));
+
+function getOperator() {
+  sign = true;
+  const leftValue = display.textContent;
+  operation.textContent += leftValue + this.textContent;
+  operate(this.textContent, leftValue, )
+
+  
+
+}
 
 // set defualt display to 0
 display.textContent = "0";
 
-//set event on click of all buttons except equal to change display
-const newArray = Array.from(buttons).filter(button => button.id !== "equal");
-newArray.forEach(button => button.addEventListener('click', fillDisplay));
+//set event on click of all buttons except equal and operators to change display
+//const newArray = Array.from(buttons).filter(button => button.id !== "equal");
+digits.forEach(button => button.addEventListener('click', fillDisplay));
 
 //clear the display screen back to 0
 clearBtn.addEventListener('click', clearDisplay);
 
 
-function fillDisplay() {
-  const numArray = display.textContent.split('');
-  console.log(numArray[0]);
-  if (numArray[0] === '0') {
-    display.textContent = this.textContent;
+function fillDisplay(e) {
+  if (sign) {
+    display.textContent = '';
+    display.textContent += this.textContent;
+    sign = false;
   }
-  else display.textContent += this.textContent;
+  else {
+    const numArray = display.textContent.split('');
+    console.log(numArray[1]);
+    if (numArray[0] === '0') {
+      display.textContent = this.textContent;
+    }
+    else display.textContent += this.textContent;
+   }
+    
 }
 
 function clearDisplay() {
   display.textContent = '0';
+  operation.textContent = '';
 }
