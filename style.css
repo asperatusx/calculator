@@ -20,6 +20,10 @@ body {
   justify-content: center;
 }
 
+#operation {
+  height: 18px;
+}
+
 .button-container {
   display: flex;
 }

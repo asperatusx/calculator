@@ -1,9 +1,12 @@
 function add(a,b) {
-  if (b == '') 
+  a = parseInt(a);
+  b = parseInt(b);
   return a + b;
 }
 
 function subtract(a,b) {
+  a = parseInt(a);
+  b = parseInt(b);
   return a - b;
 }
 
@@ -12,7 +15,7 @@ function multiply(a,b) {
 }
 
 function divide(a,b) {
-  return a/b;
+  return b/a;
 }
 
 function operate(operator, a, b) {
@@ -37,18 +40,41 @@ const clearBtn = document.getElementById('reset');
 const operation = document.getElementById('operation');
 const display = document.getElementById('display');
 const operatorBtn = document.querySelectorAll('button.operator');
+const equalBtn = document.getElementById('equal');
 
-let sign = false;
+let firstNumber, currentOperation, firstOperation, secondNumber = 0, result;
+let state = false;
+let input = 0;
 
-operatorBtn.forEach(operator => operator.addEventListener('click', getOperator));
+operatorBtn.forEach(operator => operator.addEventListener('click', doOperation));
+equalBtn.addEventListener('click', getResult);
 
-function getOperator() {
-  sign = true;
-  const leftValue = display.textContent;
-  operation.textContent += leftValue + this.textContent;
-  operate(this.textContent, leftValue, )
+function doOperation() {
+  state = true;
+  if (operation.textContent === '') {
+    firstNumber = input;
+    firstOperation = this.textContent;
+    operation.textContent = firstNumber + firstOperation;
+    return;
+  }
+  secondNumber = input;
+  result = operate(firstOperation, result, secondNumber);
+  firstOperation = this.textContent;
+  console.log(result);
+  if (isNaN(result)) {
+    console.log(!result);
+    result = operate(firstOperation, firstNumber, secondNumber);
+    display.textContent = result;
+    operation.textContent += secondNumber + firstOperation;
+    return;
+  }
+  display.textContent = result;
+  operation.textContent += secondNumber + firstOperation;
+}
 
-  
+function getResult() {
+  result = operate(currentOperation, result, secondNumber);
+  display.textContent = result;
 
 }
 
@@ -64,23 +90,39 @@ clearBtn.addEventListener('click', clearDisplay);
 
 
 function fillDisplay(e) {
-  if (sign) {
-    display.textContent = '';
-    display.textContent += this.textContent;
-    sign = false;
+  if (display.textContent === '0'){
+    display.textContent = ''; 
   }
-  else {
-    const numArray = display.textContent.split('');
-    console.log(numArray[1]);
-    if (numArray[0] === '0') {
-      display.textContent = this.textContent;
-    }
-    else display.textContent += this.textContent;
-   }
-    
+  if (state) {
+    display.textContent = '';
+    state = false;
+  }
+  display.textContent += this.textContent;
+  input = display.textContent;
+  
+  
 }
 
 function clearDisplay() {
   display.textContent = '0';
   operation.textContent = '';
 }
+
+
+
+
+
+
+/*
+first input = 1
+
+first input +- second input = total
+
+
+total = 2
+
+total - display.textContent;
+total + display.textContent; 
+
+
+*/
