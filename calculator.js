@@ -26,7 +26,7 @@ function operate(operator, a, b) {
     case '-':
       return subtract(a,b);
       break;
-    case '*':
+    case 'x':
       return multiply(a,b);
       break;
     case '/':
@@ -45,12 +45,20 @@ const equalBtn = document.getElementById('equal');
 let firstNumber, currentOperation, firstOperation, secondNumber = 0, result;
 let state = false;
 let input = 0;
+let equalState = false;
 
 operatorBtn.forEach(operator => operator.addEventListener('click', doOperation));
 equalBtn.addEventListener('click', getResult);
 
 function doOperation() {
   state = true;
+  if (equalState) {
+    operation.textContent = '';
+    firstOperation = this.textContent;
+    operation.textContent = result + firstOperation;
+    equalState = false;
+    return;
+  }
   if (operation.textContent === '') {
     firstNumber = input;
     firstOperation = this.textContent;
@@ -59,22 +67,27 @@ function doOperation() {
   }
   secondNumber = input;
   result = operate(firstOperation, result, secondNumber);
-  firstOperation = this.textContent;
-  console.log(result);
   if (isNaN(result)) {
-    console.log(!result);
     result = operate(firstOperation, firstNumber, secondNumber);
     display.textContent = result;
+    firstOperation = this.textContent;
     operation.textContent += secondNumber + firstOperation;
+    equalState = false;
     return;
   }
+  
   display.textContent = result;
+  firstOperation = this.textContent;
   operation.textContent += secondNumber + firstOperation;
+  equalState = false;
 }
 
 function getResult() {
-  result = operate(currentOperation, result, secondNumber);
+  secondNumber = input;
+  result = operate(firstOperation, firstNumber, secondNumber);
   display.textContent = result;
+  state = true;
+  equalState = true;
 
 }
 
@@ -106,6 +119,9 @@ function fillDisplay(e) {
 function clearDisplay() {
   display.textContent = '0';
   operation.textContent = '';
+  firstNumber = '';
+  secondNumber = '';
+  firstOperation = '';
 }
 
 
